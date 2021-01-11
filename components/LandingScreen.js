@@ -1,7 +1,36 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const getData = async (key) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(key);
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    // error reading value
+    Alert.alert('Storage Error', 'Please provide storage permission!', [
+      {text: 'OK', onPress: () => console.log(e)},
+    ]);
+  }
+};
 
 class LandingScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    getData('user-details')
+      .then((val) => {
+        if (val === null) {
+          console.log('Not logged in.');
+        } else {
+          console.log('User found!');
+          this.props.navigation.navigate('Home');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <View style={{flex: 1, flexDirection: 'column', padding: 10}}>

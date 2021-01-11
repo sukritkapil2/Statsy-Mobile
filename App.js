@@ -5,6 +5,7 @@ import GuideScreen from './components/GuideScreen';
 import LoginScreen from './components/LoginScreen';
 import DetailScreen from './components/DetailScreen';
 import RegisterScreen from './components/RegisterScreen';
+import HomeScreen from './components/HomeScreen';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -21,6 +22,7 @@ class App extends React.Component {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Personal Info" component={DetailScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );

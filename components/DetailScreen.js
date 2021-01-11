@@ -5,9 +5,37 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
 
 class DetailScreen extends React.Component {
+  state = {
+    name: '',
+    phone: '',
+    email: '',
+  };
+
+  nextClicked() {
+    if (this.state.name.length === 0) {
+      Alert.alert('Submission Error', 'Please enter your name', [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+    } else if (this.state.phone.length === 0) {
+      Alert.alert('Submission Error', 'Please enter your phone', [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+    } else if (this.state.email.length === 0) {
+      Alert.alert('Submission Error', 'Please enter your email', [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+    } else
+      this.props.navigation.navigate('Register', {
+        name: this.state.name,
+        phone: this.state.phone,
+        email: this.state.email,
+      });
+  }
+
   render() {
     return (
       <View style={{flex: 1, flexDirection: 'column', padding: 10}}>
@@ -15,15 +43,34 @@ class DetailScreen extends React.Component {
           <Text style={styles.label}>Name</Text>
           <TextInput
             placeholder="Enter your name"
-            style={styles.textinput}></TextInput>
+            style={styles.textinput}
+            value={this.state.name}
+            onChangeText={(text) => {
+              this.setState({
+                name: text,
+              });
+            }}></TextInput>
           <Text style={styles.label}>Phone</Text>
           <TextInput
             placeholder="Enter your phone"
-            style={styles.textinput}></TextInput>
+            style={styles.textinput}
+            value={this.state.phone}
+            onChangeText={(text) => {
+              this.setState({
+                phone: text,
+              });
+            }}
+            keyboardType="numeric"></TextInput>
           <Text style={styles.label}>Email</Text>
           <TextInput
             placeholder="Enter your email"
-            style={styles.textinput}></TextInput>
+            style={styles.textinput}
+            value={this.state.email}
+            onChangeText={(text) => {
+              this.setState({
+                email: text,
+              });
+            }}></TextInput>
           <Text
             style={{
               color: '#535353',
@@ -37,9 +84,7 @@ class DetailScreen extends React.Component {
         <View style={{flex: 1, flexDirection: 'row'}}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {
-              this.props.navigation.navigate('Register');
-            }}>
+            onPress={this.nextClicked.bind(this)}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>
